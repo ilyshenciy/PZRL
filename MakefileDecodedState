@@ -1,0 +1,24 @@
+SOURCES=main.c
+FORLIBRARY=StringUtil.o Coder.o
+LIBRARY=libString.a
+TARGET=decoded
+
+all: $(TARGET)
+
+$(TARGET): main.o libString.a
+	gcc main.o -o $(TARGET) -std=c99 -L. -lString
+
+main.o: main.c
+	gcc $< -c -o $@ -std=c99
+
+$(LIBRARY): $(FORLIBRARY)
+	ar cr $(LIBRARY) StringUtil.o Coder.o
+
+StringUtil.o: StringUtil.c
+	gcc $< -c -o $@ -std=c99
+
+Coder.o: Coder.c
+	gcc $< -c -o $@ -std=c99
+
+clean:
+	rm -f *.o *.a $(TARGET)
